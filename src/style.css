@@ -1,0 +1,53 @@
+* {
+  /* border: 1px solid red; */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+.card-body {
+  width: 500px;
+  margin: 50px auto;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 2px 3px rgb(207, 207, 207);
+}
+
+.to-do-header {
+  font-size: 19px;
+  font-weight: bold;
+}
+
+button,
+.card-header,
+.task-entry,
+.task-item {
+  padding: 10px;
+}
+
+.task-entry,
+button {
+  width: 100%;
+  border: 0;
+}
+
+.task-entry::placeholder {
+  font-style: italic;
+  font-size: 14px;
+}
+
+.task-item {
+  border: 1px solid #fee;
+}
+
+#refreshcontainer,
+.icons {
+  height: 15px;
+  width: 15px;
+  float: right;
+}
