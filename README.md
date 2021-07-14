@@ -8,12 +8,12 @@
 
 Project Summary:
 
-Set up a new project with webpack
-Create an index.html file and write your HTML markup here.
-Created an index.js file and set an array of some simple to do tasks (array of objects).
-Wrote a function to iterate over the tasks array and populate an HTML list item element for each task.
-Dynamically render created list of tasks in the dedicated placeholder.
-Created a style.css and set rules for the To-Do List.
+- Set up a new project with webpack
+- Create an index.html file
+- Created an index.js file and set an array of some simple to do tasks (array of objects).
+- Wrote a function to iterate over the tasks array and populate an HTML list item element for each task.
+- Dynamically rendered created list of tasks in the dedicated placeholder.
+- Created a style.css and set rules for the To-Do List.
 
 ## Built With
 
