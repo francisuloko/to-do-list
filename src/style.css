@@ -10,9 +10,13 @@ body {
   box-sizing: border-box;
 }
 
-.card-body {
+.card-body,
+#notice {
   width: 500px;
-  margin: 50px auto;
+  margin: 10px auto;
+}
+
+.shadow {
   border: 1px solid #ddd;
   border-radius: 5px;
   box-shadow: 2px 3px rgb(207, 207, 207);
@@ -23,15 +27,14 @@ body {
   font-weight: bold;
 }
 
-button,
+.drag-btn,
 .card-header,
 .task-entry,
 .task-item {
   padding: 10px;
 }
 
-.task-entry,
-button {
+.task-entry {
   width: 100%;
   border: 0;
 }
@@ -42,12 +45,28 @@ button {
 }
 
 .task-item {
+  display: flex;
+  align-items: center;
   border: 1px solid #fee;
 }
 
-#refreshcontainer,
 .icons {
   height: 15px;
   width: 15px;
   float: right;
+}
+
+#to-do-list {
+  height: auto;
+}
+
+.drag-btn {
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+}
+
+.task-description {
+  width: 100%;
+  margin: 0 10px;
 }

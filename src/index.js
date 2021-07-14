@@ -1,56 +1,26 @@
+import ToDoList from './to-do-list.js'
+import Task from './task.js'
 import './style.css';
 import Menu from './assets/menu.svg';
 import Refresh from './assets/refresh.svg';
+import { drag, drop, allowDrop } from './drag-and-drop.js'
 
-const toDoList = document.getElementById('to-do-list');
-const tasks = [
-  {
-    description: 'Wake up',
-    completed: false,
-    index: 0,
-  },
-  {
-    description: 'Make breakfast',
-    completed: false,
-    index: 1,
-  },
-  {
-    description: 'Write some code',
-    completed: false,
-    index: 2,
-  },
-  {
-    description: 'Submit code review',
-    completed: false,
-    index: 3,
-  },
-  {
-    description: 'Merge pull request',
-    completed: false,
-    index: 4,
-  },
-];
+let toDoList = new ToDoList();
 
-const refrestContainer = document.getElementById('refreshcontainer');
+// Add new task
+document.getElementById('task-description').addEventListener('keypress', (event) => {
+  if(event.key === 'Enter'){
+    event.preventDefault();
+    let description = document.getElementById("task-description");
+    let index = toDoList.localStorageTasks.length;
+    let task = new Task(description.value, index);
+    description.value = '';
+    toDoList.add(task);
+  }
+});
+
+const toDoHeader = document.getElementById('to-do-header');
 const refreshIcon = document.createElement('img');
+refreshIcon.classList.add('icons');
 refreshIcon.src = Refresh;
-refrestContainer.appendChild(refreshIcon);
-
-function createHTML(task) {
-  const markup = `
-   <article class='task-item'>
-     <input type='checkbox' name='completed' id='${task.index}'>
-     <span>${task.description}</span>
-     <img class='icons' src="${Menu}" alt="menu">
-   </article>
-   `;
-  return markup;
-}
-
-function component() {
-  tasks.forEach((item) => {
-    toDoList.innerHTML += createHTML(item);
-  });
-}
-
-component();
+toDoHeader.appendChild(refreshIcon);
