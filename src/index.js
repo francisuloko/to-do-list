@@ -18,9 +18,3 @@ document.getElementById('task-description').addEventListener('keypress', (event)
     toDoList.add(task);
   }
 });
-
-const toDoHeader = document.getElementById('to-do-header');
-const refreshIcon = document.createElement('img');
-refreshIcon.classList.add('icons');
-refreshIcon.src = Refresh;
-toDoHeader.appendChild(refreshIcon);

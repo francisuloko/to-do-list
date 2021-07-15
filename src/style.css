@@ -1,5 +1,4 @@
 * {
-  /* border: 1px solid red; */
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -14,6 +13,7 @@ body {
 #notice {
   width: 500px;
   margin: 10px auto;
+  padding: 0;
 }
 
 .shadow {
@@ -30,13 +30,16 @@ body {
 .drag-btn,
 .card-header,
 .task-entry,
-.task-item {
-  padding: 10px;
+.task-item,
+.card-footer {
+  padding: 15px;
 }
 
 .task-entry {
   width: 100%;
   border: 0;
+  border-top: 1px solid #f6f6f6;
+  outline: 0;
 }
 
 .task-entry::placeholder {
@@ -44,10 +47,23 @@ body {
   font-size: 14px;
 }
 
-.task-item {
+.task-item
+ {
   display: flex;
   align-items: center;
-  border: 1px solid #fee;
+  border: 1px solid #f6f6f6;
+}
+
+.entry,
+.card-header {
+  position: relative;
+}
+
+.entry i,
+.card-header i {
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
 
 .icons {
@@ -60,13 +76,25 @@ body {
   height: auto;
 }
 
-.drag-btn {
+#clear-complete {
   background-color: transparent;
+  color: #888;
+  font-size: 0.9em;
   border: 0;
   outline: 0;
+}
+
+#clear-complete:hover {
+  text-decoration: underline;
+  color: #333;
 }
 
 .task-description {
   width: 100%;
   margin: 0 10px;
+}
+
+.card-footer {
+  text-align: center;
+  background-color: #f6f6f6;
 }
