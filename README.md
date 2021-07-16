@@ -14,11 +14,13 @@ Project Summary:
 - Wrote a function to iterate over the tasks array and populate an HTML list item element for each task.
 - Dynamically rendered created list of tasks in the dedicated placeholder.
 - Created a style.css and set rules for the To-Do List.
+- Added dragged and drop functionality to To-Do list
 
 ## Built With
 
 - webpack@5.44.0
 - ES6
+- bootstrap 5
 
 ## Clone Repo
 
