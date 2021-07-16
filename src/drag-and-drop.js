@@ -15,7 +15,9 @@ function drop(ev) {
     const task = ev.dataTransfer.getData('text');
     this.insertAdjacentHTML('beforebegin', task);
     const dropped = this.previousSibling;
-    addEventsDragAndDrop(dropped);
+    dropped.addEventListener('dragstart', drag, false);
+    dropped.addEventListener('dragover', allowDrop, false);
+    dropped.addEventListener('drop', drop, false);
   }
 }
 
