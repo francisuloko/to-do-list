@@ -5,7 +5,7 @@ import Task from './task.js';
 import './style.css';
 
 const toDo = new ToDo();
-completeTaskEvent(toDo.tasks);
+completeTaskEvent(toDo.localStorageTasks);
 
 // Add new task
 document.getElementById('task-description').addEventListener('keypress', (event) => {
@@ -17,6 +17,14 @@ document.getElementById('task-description').addEventListener('keypress', (event)
     description.value = '';
     toDo.add(task);
   }
+});
+
+document.querySelectorAll('.task-item span').forEach(task => {
+  task.addEventListener('click', (ev) => {
+    if(ev.target){
+     toDo.edit(ev.target.id)
+    }
+  });
 });
 
 const tasks = document.querySelectorAll('#to-do-list .task-item');

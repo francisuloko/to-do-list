@@ -1,3 +1,4 @@
+
 export default class ToDo {
   constructor() {
     this.tasks = [];
@@ -51,8 +52,8 @@ export default class ToDo {
     }
   }
 
-  save() {
-    localStorage.setItem('tasks', JSON.stringify(this.localStorageTasks));
+  save(list) {
+    localStorage.setItem('tasks', JSON.stringify(list));
   }
 
   add(task) {
@@ -73,6 +74,18 @@ export default class ToDo {
     this.displayNotice(['success', `${task[0].description} removed successfully!`]);
     this.save();
     this.displayTasks();
+  }
+
+  edit(elem){
+    let description = document.getElementById(elem)
+    for(let i=0; i < this.localStorageTasks.length; i += 1){
+      if(this.localStorageTasks[i].index === +elem){
+        description.contentEditable = true
+        this.localStorageTasks[i].description = description.innerHTML;
+        console.log(this.localStorageTasks[i].description);
+        this.save(this.localStorageTasks);
+      }
+    } 
   }
 
   displayNotice(message) {

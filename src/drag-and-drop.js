@@ -8,7 +8,7 @@ function allowDrop(ev) {
 }
 
 function drag(ev) {
-  dragged = this;
+  dragged = ev.target;
   ev.dataTransfer.setData('text', this.outerHTML);
 }
 
@@ -25,8 +25,7 @@ function sortItems() {
     temp[i] = tasks[itemsIndex[i]];
     temp[i].index = i;
   }
-  toDo.localStorageTasks = temp;
-  toDo.save();
+  toDo.save(temp);
 }
 
 function drop(ev) {

@@ -1,21 +1,22 @@
 import ToDo from './todo.js';
 
-const toDo = new ToDo();
+let toDo = new ToDo();
 
 const checkboxes = document.getElementsByClassName('checkbox');
 
-export default function completeTaskEvent() {
-  for (let i = 0; i < checkboxes.length; i += 1) {
-    checkboxes[i].addEventListener('change', () => {
-      if (toDo.tasks[i].completed === true) {
-        toDo.tasks[i].completed = false;
-        document.getElementById(`${toDo.tasks[i].index}`).classList.remove('completed');
-        toDo.save();
+export default function completeTaskEvent(tasks) {
+  for(let i=0; i < checkboxes.length; i+=1) {
+    checkboxes[i].addEventListener('change', (ev) => {
+      console.log(tasks[i]);
+      if (tasks[i].completed === true) {
+        tasks[i].completed = false;
+        document.getElementById(`${tasks[i].index}`).classList.remove('completed');
+        toDo.save(tasks);
       } else {
-        toDo.tasks[i].completed = true;
-        document.getElementById(`${toDo.tasks[i].index}`).classList.add('completed');
-        toDo.save();
+        tasks[i].completed = true;
+        document.getElementById(`${tasks[i].index}`).classList.add('completed');
+        toDo.save(tasks);
       }
-    });
+    })
   }
 }
