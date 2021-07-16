@@ -15,9 +15,13 @@ Project Summary:
 - Dynamically rendered created list of tasks in the dedicated placeholder.
 - Created a style.css and set rules for the To-Do List.
 - Added dragged and drop functionality to To-Do list
+- Added task completion functionality
+- Persisted sorted list to localStorage
 
 ## Built With
 
+- JavaScript
+- HTML & CSS
 - webpack@5.44.0
 - ES6
 - bootstrap 5
