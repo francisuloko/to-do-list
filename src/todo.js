@@ -8,26 +8,38 @@ export default class ToDo {
     if (this.localStorageTasks == null) {
       localStorage.setItem('tasks', JSON.stringify([]));
     } else {
+      this.task = this.localStorageTasks;
       this.displayTasks();
     }
   }
 
   createTask(task) {
-    const taskObj = `
-        <article class="task-item" id="task-${task.index}" draggable="true">
-          <input type='checkbox' name='completed'>
-          <span class='task-description'>${task.description}</span>
+    let taskObj;
+
+    if (task.completed === true) {
+      taskObj = `
+        <article class="task-item" draggable="true">
+          <input type='checkbox' name='completed' class="checkbox" checked>
+          <span class='task-description completed' id="${task.index}">${task.description}</span>
           <i class="bi bi-three-dots-vertical"></i>
         </article>`;
+    } else {
+      taskObj = `
+          <article class="task-item" draggable="true">
+            <input type='checkbox' name='completed' class="checkbox">
+            <span class='task-description' id="${task.index}">${task.description}</span>
+            <i class="bi bi-three-dots-vertical"></i>
+          </article>`;
+    }
 
     this.toDoList.innerHTML += taskObj;
   }
 
   displayTasks() {
     document.getElementById('to-do-list').innerHTML = '';
-    const tasks = this.localStorageTasks;
-    for (let i = 0; i < tasks.length; i += 1) {
-      this.createTask(tasks[i], i);
+    this.tasks = this.localStorageTasks;
+    for (let i = 0; i < this.tasks.length; i += 1) {
+      this.createTask(this.tasks[i], i);
     }
 
     const removeButtons = document.querySelectorAll('.remove-button');
@@ -40,7 +52,7 @@ export default class ToDo {
   }
 
   save() {
-    localStorage.setItem('tasks', JSON.stringify(this.tasks));
+    localStorage.setItem('tasks', JSON.stringify(this.localStorageTasks));
   }
 
   add(task) {

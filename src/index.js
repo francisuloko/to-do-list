@@ -1,9 +1,11 @@
 import ToDo from './todo.js';
 import addEventsDragAndDrop from './drag-and-drop.js';
+import completeTaskEvent from './status-update.js';
 import Task from './task.js';
 import './style.css';
 
 const toDo = new ToDo();
+completeTaskEvent(toDo.tasks);
 
 // Add new task
 document.getElementById('task-description').addEventListener('keypress', (event) => {

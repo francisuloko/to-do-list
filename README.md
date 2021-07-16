@@ -32,6 +32,13 @@ Open terminal or command line and run the following commands:
 
    - `cd to-do-list`
 
+   - `npm install`
+
+   - `npm start`
+
+   - `visit localhost:8080`
+   
+
 ## Prerequisites
 
 - `browser`
