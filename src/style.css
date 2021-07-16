@@ -47,8 +47,7 @@ body {
   font-size: 14px;
 }
 
-.task-item
- {
+.task-item {
   display: flex;
   align-items: center;
   border: 1px solid #f6f6f6;
