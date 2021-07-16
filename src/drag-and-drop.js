@@ -1,13 +1,33 @@
+let dragged;
+
 function allowDrop(ev) {
   ev.preventDefault();
 }
 
 function drag(ev) {
-  ev.dataTransfer.setData("text", ev.target.id);
+  dragged = this;
+  ev.dataTransfer.setData("text", this.outerHTML);
 }
 
 function drop(ev) {
-  ev.preventDefault();
-  var data = ev.dataTransfer.getData("text");
-  ev.target.appendChild(document.getElementById(data));
+  if(dragged != this) {
+    this.parentNode.removeChild(dragged)
+    const task = ev.dataTransfer.getData("text");
+    this.insertAdjacentHTML('beforebegin', task)
+    let dropped = this.previousSibling;
+    addEventsDragAndDrop(dropped);
+  }
 }
+
+function addEventsDragAndDrop(elem) {
+  elem.addEventListener('dragstart', drag, false);
+  elem.addEventListener('dragover', allowDrop, false);
+  elem.addEventListener('drop', drop, false);
+}
+
+let tasks = document.querySelectorAll('.task-item');
+tasks.forEach(task => {
+  addEventsDragAndDrop(task);
+})
+
+export { addEventsDragAndDrop };

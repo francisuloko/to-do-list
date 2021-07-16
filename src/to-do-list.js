@@ -1,5 +1,3 @@
-import menuIcon from './assets/menu.svg';
-
 export default class ToDoList {
     constructor(){
       this.tasks = [];
@@ -16,10 +14,10 @@ export default class ToDoList {
 
     createTask(task) {
       const taskObj = `
-        <article class='task-item' draggable="true">
-          <input type='checkbox' name='completed' id='${task.index}'>
-          <span class='task-description' contenteditable="true">${task.description}</span>
-          <i class="bi bi-arrow-return-left"></i>
+        <article class="task-item" id="task-${task.index}" draggable="true">
+          <input type='checkbox' name='completed'>
+          <span class='task-description'>${task.description}</span>
+          <i class="bi bi-three-dots-vertical"></i>
         </article>`;
 
       this.toDoList.innerHTML += taskObj;
