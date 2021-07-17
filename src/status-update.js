@@ -1,5 +1,6 @@
-// eslint-disable-next-line import/no-mutable-exports
+const checkboxes = document.getElementsByClassName('checkbox');
 
+// eslint-disable-next-line import/no-mutable-exports
 export let list = [
   {
     description: 'This is the first test',
@@ -32,7 +33,6 @@ export const save = () => {
   localStorage.setItem('list', JSON.stringify(list));
 };
 
-const checkboxes = document.getElementsByClassName('checkbox');
 export default function checkboxesEvent(list) {
   for (let i = 0; i < checkboxes.length; i += 1) {
     checkboxes[i].addEventListener('change', () => {

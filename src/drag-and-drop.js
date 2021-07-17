@@ -2,7 +2,6 @@
 import { default as checkboxesEvent, save, list } from './status-update.js';
 
 const todoList = document.getElementById('todo-list');
-
 const createTask = (task) => {
   let todoObj = '';
   if (task.completed === true) {
