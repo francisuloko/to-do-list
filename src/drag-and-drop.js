@@ -1,26 +1,7 @@
+// eslint-disable-next-line import/no-named-default
 import { default as checkboxesEvent, save, list } from './status-update.js';
 
 const todoList = document.getElementById('todo-list');
-
-export const displayTasks = () => {
-  todoList.innerHTML = '';
-
-  const sortedList = list.sort((a, b) => {
-    if (a.index > b.index) {
-      return 1;
-    }
-    if (a.index < b.index) {
-      return -1;
-    }
-    return 0;
-  });
-
-  sortedList.forEach(task => {
-    createTask(task)
-  });
-
-  save()
-};
 
 const createTask = (task) => {
   let todoObj = '';
@@ -41,14 +22,34 @@ const createTask = (task) => {
   }
 
   todoList.innerHTML += todoObj;
-}
+};
+
+export const displayTasks = () => {
+  todoList.innerHTML = '';
+
+  const sortedList = list.sort((a, b) => {
+    if (a.index > b.index) {
+      return 1;
+    }
+    if (a.index < b.index) {
+      return -1;
+    }
+    return 0;
+  });
+
+  sortedList.forEach((task) => {
+    createTask(task);
+  });
+
+  save();
+};
 
 export default function dragAndDrop() {
   let dragged;
 
   document.addEventListener('dragstart', (event) => {
     dragged = event.target;
-    event.dataTransfer.setData('text', event.target.classList)
+    event.dataTransfer.setData('text', event.target.classList);
   }, false);
 
   document.addEventListener('dragover', (event) => {
@@ -60,10 +61,10 @@ export default function dragAndDrop() {
     if (event.dataTransfer.getData('text') === 'task-item') {
       const taskIndex = list[dragged.id].index;
 
-      list[dragged.id].index = list[event.target.id].index
-      list[event.target.id].index = taskIndex
-      dragged.id = list[dragged.id].index
-      event.target.id = list[event.target.id].index
+      list[dragged.id].index = list[event.target.id].index;
+      list[event.target.id].index = taskIndex;
+      dragged.id = list[dragged.id].index;
+      event.target.id = list[event.target.id].index;
     }
     displayTasks();
     checkboxesEvent(list);

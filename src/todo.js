@@ -5,7 +5,7 @@ export default class ToDo {
     this.localStorageTasks = JSON.parse(localStorage.getItem('tasks'));
     this.notice = document.getElementById('notice');
 
-    if(this.localStorageTasks == null) {
+    if (this.localStorageTasks == null) {
       localStorage.setItem('tasks', JSON.stringify([]));
     } else {
       this.tasks = this.localStorageTasks;
@@ -38,7 +38,7 @@ export default class ToDo {
     document.getElementById('to-do-list').innerHTML = '';
     for (let i = 0; i < this.tasks.length; i += 1) {
       this.createTask(this.tasks[i]);
-      this.save()
+      this.save();
     }
 
     const removeButtons = document.querySelectorAll('.remove-button');
@@ -109,7 +109,6 @@ export default class ToDo {
       temp[i] = this.tasks[itemsIndex[i]];
       temp[i].index = i;
     }
-    console.log(this.tasks)
     this.save();
   }
 }
