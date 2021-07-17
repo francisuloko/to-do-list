@@ -1,9 +1,13 @@
 import './style.css';
-// eslint-disable-next-line import/no-named-default
-import { default as checkboxesEvent, list } from './status-update.js';
-// eslint-disable-next-line import/no-named-default
-import { default as dragAndDrop, displayTasks } from './drag-and-drop.js';
+import checkboxesEvent, { list } from './status-update.js';
+import dragAndDrop from './drag-and-drop.js';
+import {
+  displayTasks, remove, edit, clear,
+} from './crudtask.js';
 
 displayTasks();
 dragAndDrop();
 checkboxesEvent(list);
+edit();
+remove();
+clear();
