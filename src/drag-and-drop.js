@@ -26,5 +26,3 @@ export default function dragAndDrop() {
     checkboxesEvent(todo.tasks);
   }, false);
 }
-
-document.location.reload;

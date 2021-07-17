@@ -1,6 +1,6 @@
 export default class ToDo {
   constructor() {
-    this.tasks = []
+    this.tasks = [];
     if (localStorage.getItem('tasks')) {
       const localStorageTasks = JSON.parse(localStorage.getItem('tasks'));
       this.tasks = localStorageTasks;
@@ -100,7 +100,7 @@ export default class ToDo {
     sortedItems.forEach((item) => {
       itemsIndex.push(item.children[1].id);
     });
-  
+
     const temp = [];
     for (let i = 0; i < this.tasks.length; i += 1) {
       temp[i] = this.tasks[itemsIndex[i]];

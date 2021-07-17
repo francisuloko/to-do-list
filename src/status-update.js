@@ -1,4 +1,4 @@
-import ToDo from "./todo.js";
+import ToDo from './todo.js';
 
 const todo = new ToDo();
 const checkboxes = document.getElementsByClassName('checkbox');

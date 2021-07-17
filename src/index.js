@@ -5,27 +5,25 @@ import checkboxesEvent from './status-update.js';
 
 const todo = new ToDo();
 
-
 document.getElementById('task-description').addEventListener('keypress', (event) => {
   if (event.key === 'Enter') {
     const description = document.getElementById('task-description');
     const index = todo.tasks.length;
-    const task = {description: description.value, index: index, completed: false};
+    const task = { description: description.value, index, completed: false };
     description.value = '';
-    todo.add(task)
+    todo.add(task);
     todo.displayTasks();
   }
 });
 
-let items = document.querySelectorAll('.task-item')
-for(let i=0; i < items.length; i+=1) {
-  items[i].addEventListener('click', ()=>{
+const items = document.querySelectorAll('.task-item');
+for (let i = 0; i < items.length; i += 1) {
+  items[i].addEventListener('click', () => {
     todo.edit(items[i].id);
     todo.displayTasks();
-  })
+  });
 }
 
 todo.displayTasks();
 dragAndDrop();
 checkboxesEvent(todo.tasks);
-
