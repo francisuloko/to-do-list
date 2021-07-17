@@ -1,48 +1,30 @@
-import ToDo from './todo.js';
+import Todo from './todo.js';
+import checkboxesEvent from './status-update.js';
 
-const toDo = new ToDo();
-let dragged;
+const todo = new Todo();
 
-function allowDrop(ev) {
-  ev.preventDefault();
+export default function dragAndDrop() {
+  let dragged;
+
+  document.addEventListener('dragstart', (event) => {
+    dragged = event.target;
+    event.dataTransfer.setData('text', event.target.outerHTML);
+  }, false);
+
+  document.addEventListener('dragover', (event) => {
+    event.preventDefault();
+  }, false);
+
+  document.addEventListener('drop', (event) => {
+    event.preventDefault();
+    if (dragged !== event.target) {
+      event.target.parentNode.removeChild(dragged);
+      const task = event.dataTransfer.getData('text');
+      event.target.insertAdjacentHTML('beforebegin', task);
+      todo.sortItems();
+    }
+    checkboxesEvent(todo.tasks);
+  }, false);
 }
 
-function drag(ev) {
-  dragged = ev.target;
-  ev.dataTransfer.setData('text', this.outerHTML);
-}
-
-function sortItems() {
-  const sortedItems = document.getElementById('to-do-list').querySelectorAll('.task-item');
-  const itemsIndex = [];
-  sortedItems.forEach((item) => {
-    itemsIndex.push(item.children[1].id);
-  });
-
-  const tasks = toDo.localStorageTasks;
-  const temp = [];
-  for (let i = 0; i < tasks.length; i += 1) {
-    temp[i] = tasks[itemsIndex[i]];
-    temp[i].index = i;
-  }
-  toDo.save(temp);
-}
-
-function drop(ev) {
-  if (dragged !== this) {
-    this.parentNode.removeChild(dragged);
-    const task = ev.dataTransfer.getData('text');
-    this.insertAdjacentHTML('beforebegin', task);
-    const itemsAfter = this.previousSibling;
-    itemsAfter.addEventListener('dragstart', drag, false);
-    itemsAfter.addEventListener('dragover', allowDrop, false);
-    itemsAfter.addEventListener('drop', drop, false);
-    sortItems();
-  }
-}
-
-export default function addEventsDragAndDrop(elem) {
-  elem.addEventListener('dragstart', drag, false);
-  elem.addEventListener('dragover', allowDrop, false);
-  elem.addEventListener('drop', drop, false);
-}
+document.location.reload;

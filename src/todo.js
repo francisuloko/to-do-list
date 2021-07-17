@@ -1,17 +1,13 @@
-
 export default class ToDo {
   constructor() {
-    this.tasks = [];
-    this.toDoList = document.getElementById('to-do-list');
-    this.localStorageTasks = JSON.parse(localStorage.getItem('tasks'));
-    this.notice = document.getElementById('notice');
-
-    if (this.localStorageTasks == null) {
-      localStorage.setItem('tasks', JSON.stringify([]));
-    } else {
-      this.task = this.localStorageTasks;
-      this.displayTasks();
+    this.tasks = []
+    if (localStorage.getItem('tasks')) {
+      const localStorageTasks = JSON.parse(localStorage.getItem('tasks'));
+      this.tasks = localStorageTasks;
     }
+    this.toDoList = document.getElementById('to-do-list');
+    this.notice = document.getElementById('notice');
+    this.displayTasks();
   }
 
   createTask(task) {
@@ -38,9 +34,8 @@ export default class ToDo {
 
   displayTasks() {
     document.getElementById('to-do-list').innerHTML = '';
-    this.tasks = this.localStorageTasks;
     for (let i = 0; i < this.tasks.length; i += 1) {
-      this.createTask(this.tasks[i], i);
+      this.createTask(this.tasks[i]);
     }
 
     const removeButtons = document.querySelectorAll('.remove-button');
@@ -52,40 +47,37 @@ export default class ToDo {
     }
   }
 
-  save(list) {
-    localStorage.setItem('tasks', JSON.stringify(list));
+  save(tasks) {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
   }
 
-  add(task) {
-    if (task.description !== '') {
-      this.tasks = this.localStorageTasks;
-      this.tasks.push(task);
-      this.save();
-      this.displayNotice(['success', `${task.description} added successfully!`]);
+  add(todoObj) {
+    if (todoObj.description !== '') {
+      this.tasks.push(todoObj);
+      this.save(this.tasks);
       this.displayTasks();
+      this.displayNotice(['success', `${todoObj.description} added successfully!`]);
     } else {
       this.displayNotice(['fail', 'Task Description cannot be empty']);
     }
   }
 
   remove(id) {
-    this.tasks = this.localStorageTasks;
     const task = this.tasks.splice(id, 1);
     this.displayNotice(['success', `${task[0].description} removed successfully!`]);
-    this.save();
+    this.save(this.tasks);
     this.displayTasks();
   }
 
-  edit(elem){
-    let description = document.getElementById(elem)
-    for(let i=0; i < this.localStorageTasks.length; i += 1){
-      if(this.localStorageTasks[i].index === +elem){
-        description.contentEditable = true
-        this.localStorageTasks[i].description = description.innerHTML;
-        console.log(this.localStorageTasks[i].description);
-        this.save(this.localStorageTasks);
+  edit(elem) {
+    const description = document.getElementById(elem);
+    for (let i = 0; i < this.tasks.length; i += 1) {
+      if (this.tasks[i].index === +elem && this.tasks[i].completed !== true) {
+        description.contentEditable = true;
+        this.tasks[i].description = description.innerHTML;
+        this.save(this.tasks);
       }
-    } 
+    }
   }
 
   displayNotice(message) {
@@ -100,5 +92,20 @@ export default class ToDo {
     setTimeout(() => {
       this.notice.innerHTML = '';
     }, 2000);
+  }
+
+  sortItems() {
+    const sortedItems = document.getElementById('to-do-list').querySelectorAll('.task-item');
+    const itemsIndex = [];
+    sortedItems.forEach((item) => {
+      itemsIndex.push(item.children[1].id);
+    });
+  
+    const temp = [];
+    for (let i = 0; i < this.tasks.length; i += 1) {
+      temp[i] = this.tasks[itemsIndex[i]];
+      temp[i].index = i;
+    }
+    this.save(temp);
   }
 }

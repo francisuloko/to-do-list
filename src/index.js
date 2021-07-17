@@ -1,31 +1,31 @@
-import ToDo from './todo.js';
-import addEventsDragAndDrop from './drag-and-drop.js';
-import completeTaskEvent from './status-update.js';
-import Task from './task.js';
 import './style.css';
+import ToDo from './todo.js';
+import dragAndDrop from './drag-and-drop.js';
+import checkboxesEvent from './status-update.js';
 
-const toDo = new ToDo();
-completeTaskEvent(toDo.localStorageTasks);
+const todo = new ToDo();
 
-// Add new task
+
 document.getElementById('task-description').addEventListener('keypress', (event) => {
   if (event.key === 'Enter') {
-    event.preventDefault();
     const description = document.getElementById('task-description');
-    const index = toDo.localStorageTasks.length;
-    const task = new Task(description.value, index);
+    const index = todo.tasks.length;
+    const task = {description: description.value, index: index, completed: false};
     description.value = '';
-    toDo.add(task);
+    todo.add(task)
+    todo.displayTasks();
   }
 });
 
-document.querySelectorAll('.task-item span').forEach(task => {
-  task.addEventListener('click', (ev) => {
-    if(ev.target){
-     toDo.edit(ev.target.id)
-    }
-  });
-});
+let items = document.querySelectorAll('.task-item')
+for(let i=0; i < items.length; i+=1) {
+  items[i].addEventListener('click', ()=>{
+    todo.edit(items[i].id);
+    todo.displayTasks();
+  })
+}
 
-const tasks = document.querySelectorAll('#to-do-list .task-item');
-[].forEach.call(tasks, addEventsDragAndDrop);
+todo.displayTasks();
+dragAndDrop();
+checkboxesEvent(todo.tasks);
+
