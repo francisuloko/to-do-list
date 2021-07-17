@@ -1,5 +1,4 @@
 * {
-  /* border: 1px solid red; */
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -10,9 +9,14 @@ body {
   box-sizing: border-box;
 }
 
-.card-body {
+.card-body,
+#notice {
   width: 500px;
-  margin: 50px auto;
+  margin: 10px auto;
+  padding: 0;
+}
+
+.shadow {
   border: 1px solid #ddd;
   border-radius: 5px;
   box-shadow: 2px 3px rgb(207, 207, 207);
@@ -23,17 +27,19 @@ body {
   font-weight: bold;
 }
 
-button,
+.drag-btn,
 .card-header,
 .task-entry,
-.task-item {
-  padding: 10px;
+.task-item,
+.card-footer {
+  padding: 15px;
 }
 
-.task-entry,
-button {
+.task-entry {
   width: 100%;
   border: 0;
+  border-top: 1px solid #f6f6f6;
+  outline: 0;
 }
 
 .task-entry::placeholder {
@@ -42,12 +48,61 @@ button {
 }
 
 .task-item {
-  border: 1px solid #fee;
+  display: flex;
+  align-items: center;
+  border: 1px solid #f6f6f6;
+  cursor: move;
 }
 
-#refreshcontainer,
+.entry,
+.card-header {
+  position: relative;
+}
+
+.entry i,
+.card-header i {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
 .icons {
   height: 15px;
   width: 15px;
   float: right;
+}
+
+#to-do-list {
+  height: auto;
+}
+
+#clear-complete {
+  background-color: transparent;
+  color: #888;
+  font-size: 0.9em;
+  border: 0;
+  outline: 0;
+}
+
+#clear-complete:hover {
+  text-decoration: underline;
+  color: #333;
+}
+
+.task-description {
+  width: 100%;
+  margin: 0 10px;
+}
+
+.card-footer {
+  text-align: center;
+  background-color: #f6f6f6;
+}
+
+.completed {
+  text-decoration: black line-through;
+}
+
+.hide {
+  display: none;
 }

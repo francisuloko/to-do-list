@@ -14,11 +14,17 @@ Project Summary:
 - Wrote a function to iterate over the tasks array and populate an HTML list item element for each task.
 - Dynamically rendered created list of tasks in the dedicated placeholder.
 - Created a style.css and set rules for the To-Do List.
+- Added dragged and drop functionality to To-Do list
+- Added task completion functionality
+- Persisted sorted list to localStorage
 
 ## Built With
 
+- JavaScript
+- HTML & CSS
 - webpack@5.44.0
 - ES6
+- bootstrap 5
 
 ## Clone Repo
 
@@ -29,6 +35,13 @@ Open terminal or command line and run the following commands:
    - `git clone git@github.com:francisuloko/to-do-list.git`
 
    - `cd to-do-list`
+
+   - `npm install`
+
+   - `npm start`
+
+   - `visit localhost:8080`
+   
 
 ## Prerequisites
 
