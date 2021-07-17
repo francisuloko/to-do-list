@@ -1,13 +1,15 @@
 export default class ToDo {
   constructor() {
     this.tasks = [];
-    if (localStorage.getItem('tasks')) {
-      const localStorageTasks = JSON.parse(localStorage.getItem('tasks'));
-      this.tasks = localStorageTasks;
-    }
     this.toDoList = document.getElementById('to-do-list');
+    this.localStorageTasks = JSON.parse(localStorage.getItem('tasks'));
     this.notice = document.getElementById('notice');
-    this.displayTasks();
+
+    if(this.localStorageTasks == null) {
+      localStorage.setItem('tasks', JSON.stringify([]));
+    } else {
+      this.tasks = this.localStorageTasks;
+    }
   }
 
   createTask(task) {
@@ -36,6 +38,7 @@ export default class ToDo {
     document.getElementById('to-do-list').innerHTML = '';
     for (let i = 0; i < this.tasks.length; i += 1) {
       this.createTask(this.tasks[i]);
+      this.save()
     }
 
     const removeButtons = document.querySelectorAll('.remove-button');
@@ -47,14 +50,14 @@ export default class ToDo {
     }
   }
 
-  save(tasks) {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+  save() {
+    localStorage.setItem('tasks', JSON.stringify(this.tasks));
   }
 
   add(todoObj) {
     if (todoObj.description !== '') {
       this.tasks.push(todoObj);
-      this.save(this.tasks);
+      this.save();
       this.displayTasks();
       this.displayNotice(['success', `${todoObj.description} added successfully!`]);
     } else {
@@ -65,7 +68,7 @@ export default class ToDo {
   remove(id) {
     const task = this.tasks.splice(id, 1);
     this.displayNotice(['success', `${task[0].description} removed successfully!`]);
-    this.save(this.tasks);
+    this.save();
     this.displayTasks();
   }
 
@@ -75,7 +78,7 @@ export default class ToDo {
       if (this.tasks[i].index === +elem && this.tasks[i].completed !== true) {
         description.contentEditable = true;
         this.tasks[i].description = description.innerHTML;
-        this.save(this.tasks);
+        this.save();
       }
     }
   }
@@ -106,6 +109,7 @@ export default class ToDo {
       temp[i] = this.tasks[itemsIndex[i]];
       temp[i].index = i;
     }
-    this.save(temp);
+    console.log(this.tasks)
+    this.save();
   }
 }

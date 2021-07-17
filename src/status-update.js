@@ -9,12 +9,11 @@ export default function checkboxesEvent(list) {
       if (list[i].completed === true) {
         list[i].completed = false;
         document.getElementById(`${todo.tasks[i].index}`).classList.remove('completed');
-        todo.save(list);
       } else {
         list[i].completed = true;
         document.getElementById(`${todo.tasks[i].index}`).classList.add('completed');
-        todo.save(list);
       }
+      todo.save();
     });
   }
 }

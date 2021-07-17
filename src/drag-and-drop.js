@@ -1,14 +1,54 @@
-import Todo from './todo.js';
-import checkboxesEvent from './status-update.js';
+import { default as checkboxesEvent, save, list } from './status-update.js';
 
-const todo = new Todo();
+const todoList = document.getElementById('todo-list');
+
+export const displayTasks = () => {
+  todoList.innerHTML = '';
+
+  const sortedList = list.sort((a, b) => {
+    if (a.index > b.index) {
+      return 1;
+    }
+    if (a.index < b.index) {
+      return -1;
+    }
+    return 0;
+  });
+
+  sortedList.forEach(task => {
+    createTask(task)
+  });
+
+  save()
+};
+
+const createTask = (task) => {
+  let todoObj = '';
+  if (task.completed === true) {
+    todoObj = `
+      <article id="${task.index}" class="task-item" draggable="true">
+        <input type='checkbox' name='completed' class="checkbox" checked>
+        <span class='task-description completed' id="desc-${task.index}">${task.description}</span>
+        <i class="bi bi-three-dots-vertical"></i>
+      </article>`;
+  } else {
+    todoObj = `
+        <article  id="${task.index}" class="task-item" draggable="true">
+          <input type='checkbox' name='completed' class="checkbox">
+          <span class='task-description' id="desc-${task.index}">${task.description}</span>
+          <i class="bi bi-three-dots-vertical"></i>
+        </article>`;
+  }
+
+  todoList.innerHTML += todoObj;
+}
 
 export default function dragAndDrop() {
   let dragged;
 
   document.addEventListener('dragstart', (event) => {
     dragged = event.target;
-    event.dataTransfer.setData('text', event.target.outerHTML);
+    event.dataTransfer.setData('text', event.target.classList)
   }, false);
 
   document.addEventListener('dragover', (event) => {
@@ -17,12 +57,15 @@ export default function dragAndDrop() {
 
   document.addEventListener('drop', (event) => {
     event.preventDefault();
-    if (dragged !== event.target) {
-      event.target.parentNode.removeChild(dragged);
-      const task = event.dataTransfer.getData('text');
-      event.target.insertAdjacentHTML('beforebegin', task);
-      todo.sortItems();
+    if (event.dataTransfer.getData('text') === 'task-item') {
+      const taskIndex = list[dragged.id].index;
+
+      list[dragged.id].index = list[event.target.id].index
+      list[event.target.id].index = taskIndex
+      dragged.id = list[dragged.id].index
+      event.target.id = list[event.target.id].index
     }
-    checkboxesEvent(todo.tasks);
+    displayTasks();
+    checkboxesEvent(list);
   }, false);
 }

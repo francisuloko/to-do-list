@@ -8,8 +8,8 @@ const todo = new ToDo();
 document.getElementById('task-description').addEventListener('keypress', (event) => {
   if (event.key === 'Enter') {
     const description = document.getElementById('task-description');
-    const index = todo.tasks.length;
-    const task = { description: description.value, index, completed: false };
+    const todoIndex = todo.tasks.length;
+    const task = { description: description.value, index: todoIndex, completed: false };
     description.value = '';
     todo.add(task);
     todo.displayTasks();
