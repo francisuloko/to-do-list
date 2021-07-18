@@ -62,7 +62,6 @@ export function edit() {
           list[i].description = JSON.parse(localStorage.getItem('edit'));
           save();
         }
-        // editables[i].parentNode.children[3].classList.remove('show')
         editables[i].parentNode.children[2].classList.remove('hide');
         edit();
         remove();
