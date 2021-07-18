@@ -47,19 +47,24 @@ export const displayTasks = () => {
   save();
 };
 
-
-
 export function edit() {
   const editables = document.querySelectorAll("[contenteditable]");
   for(let i=0; i < editables.length; i+=1) {
-    editables[i].addEventListener("blur", (event) => {
-      if(event.target){
-        localStorage.setItem("edit", JSON.stringify(editables[i].innerHTML));
-        list[i].description = JSON.parse(localStorage.getItem('edit'))
-        save();
-      }
-      edit();
-    })
+    editables[i].addEventListener("click", () => {
+      editables[i].parentNode.children[3].classList.add('show')
+      editables[i].parentNode.children[2].classList.add('hide')
+      editables[i].addEventListener("blur", (event) => {
+        if(event.target){
+          localStorage.setItem("edit", JSON.stringify(editables[i].innerHTML));
+          list[i].description = JSON.parse(localStorage.getItem('edit'))
+          save();
+        }
+        // editables[i].parentNode.children[3].classList.remove('show')
+        editables[i].parentNode.children[2].classList.remove('hide')
+        edit();
+        remove();
+      });
+    });
   }
 }
 
@@ -77,7 +82,7 @@ export function clear() {
 export function remove() {
   for (let i = 0; i < items.length; i += 1) {
     items[i].children[3].addEventListener('click', (event) => {
-      if (event) {
+      if (event.target) {
         list.splice(i, 1);
         fixIndex(list);
         save();
@@ -89,16 +94,20 @@ export function remove() {
   }
 }
 
-document.getElementById('task-entry').addEventListener('keypress', (event) => {
-  if (event.key === 'Enter') {
-    event.preventDefault();
-    const description = document.getElementById('task-entry');
-    const id = list.length;
-    const task = { description: description.value, completed: false, index: id };
-    description.value = '';
-    list.push(task);
-    save();
-    displayTasks();
-    checkboxesEvent();
-  }
-});
+
+export function add(){
+  document.getElementById('task-entry').addEventListener('keypress', (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      const description = document.getElementById('task-entry');
+      const id = list.length;
+      const task = { description: description.value, completed: false, index: id };
+      description.value = '';
+      list.push(task);
+      save();
+      remove();
+      displayTasks();
+      checkboxesEvent();
+    }
+  });
+}
