@@ -1,49 +1,62 @@
-const checkboxes = document.getElementsByClassName('checkbox');
-
+// eslint-disable-next-line import/no-cycle
+import { displayTasks, items } from './crudtodo.js';
 // eslint-disable-next-line import/no-mutable-exports
-export let list = [
-  {
-    description: 'This is the first test',
-    completed: true,
-    index: 0,
-  },
-  {
-    description: 'This is the second test',
-    completed: false,
-    index: 1,
-  },
-  {
-    description: 'This is the third test',
-    completed: true,
-    index: 2,
-  },
-  {
-    description: 'This is the fourth test',
-    completed: false,
-    index: 3,
-  },
-];
+export let list = [];
 
 if (localStorage.getItem('list')) {
-  const localStorageTasks = JSON.parse(localStorage.getItem('list'));
-  list = localStorageTasks;
+  list = JSON.parse(localStorage.getItem('list'));
 }
 
 export const save = () => {
   localStorage.setItem('list', JSON.stringify(list));
 };
 
-export default function checkboxesEvent(list) {
+export function fixIndex(list) {
+  for (let i = 0; i < list.length; i += 1) {
+    list[i].index = i;
+  }
+}
+
+export function setList(filter) {
+  list = [];
+  for (let i = 0; i < filter.length; i += 1) {
+    list[i] = filter[i];
+    save();
+    displayTasks();
+  }
+}
+
+export default function checkboxesEvent() {
+  const temp = list;
+
+  const checkboxes = document.getElementsByClassName('checkbox');
   for (let i = 0; i < checkboxes.length; i += 1) {
     checkboxes[i].addEventListener('change', () => {
-      if (list[i].completed === true) {
-        list[i].completed = false;
-        document.getElementById(`desc-${list[i].index}`).classList.remove('completed');
+      if (temp[i].completed === true) {
+        temp[i].completed = false;
+        document.getElementById(`desc-${temp[i].index}`).classList.remove('completed');
       } else {
-        list[i].completed = true;
-        document.getElementById(`desc-${list[i].index}`).classList.add('completed');
+        temp[i].completed = true;
+        document.getElementById(`desc-${temp[i].index}`).classList.add('completed');
       }
-      save();
+      setList(temp);
+    });
+  }
+}
+
+export function remove() {
+  const temp = list;
+  for (let i = 0; i < items.length; i += 1) {
+    items[i].children[3].addEventListener('click', (event) => {
+      if (event.target) {
+        temp.splice(i, 1);
+        fixIndex(temp);
+        setList(temp);
+        save();
+      }
+      checkboxesEvent();
+      displayTasks();
+      remove();
     });
   }
 }

@@ -51,7 +51,6 @@ body {
   display: flex;
   align-items: center;
   border: 1px solid #f6f6f6;
-  cursor: move;
 }
 
 .entry,
@@ -103,6 +102,11 @@ body {
   text-decoration: black line-through;
 }
 
-.hide {
+.hide,
+.bi-trash {
   display: none;
+}
+
+.show {
+  display: block;
 }

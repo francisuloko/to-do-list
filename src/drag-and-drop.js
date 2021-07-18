@@ -1,47 +1,5 @@
-// eslint-disable-next-line import/no-named-default
-import { default as checkboxesEvent, save, list } from './status-update.js';
-
-const todoList = document.getElementById('todo-list');
-const createTask = (task) => {
-  let todoObj = '';
-  if (task.completed === true) {
-    todoObj = `
-      <article id="${task.index}" class="task-item" draggable="true">
-        <input type='checkbox' name='completed' class="checkbox" checked>
-        <span class='task-description completed' id="desc-${task.index}">${task.description}</span>
-        <i class="bi bi-three-dots-vertical"></i>
-      </article>`;
-  } else {
-    todoObj = `
-        <article  id="${task.index}" class="task-item" draggable="true">
-          <input type='checkbox' name='completed' class="checkbox">
-          <span class='task-description' id="desc-${task.index}">${task.description}</span>
-          <i class="bi bi-three-dots-vertical"></i>
-        </article>`;
-  }
-
-  todoList.innerHTML += todoObj;
-};
-
-export const displayTasks = () => {
-  todoList.innerHTML = '';
-
-  const sortedList = list.sort((a, b) => {
-    if (a.index > b.index) {
-      return 1;
-    }
-    if (a.index < b.index) {
-      return -1;
-    }
-    return 0;
-  });
-
-  sortedList.forEach((task) => {
-    createTask(task);
-  });
-
-  save();
-};
+import checkboxesEvent, { list } from './status-update.js';
+import { displayTasks } from './crudtodo.js';
 
 export default function dragAndDrop() {
   let dragged;
@@ -66,6 +24,6 @@ export default function dragAndDrop() {
       event.target.id = list[event.target.id].index;
     }
     displayTasks();
-    checkboxesEvent(list);
+    checkboxesEvent();
   }, false);
 }
