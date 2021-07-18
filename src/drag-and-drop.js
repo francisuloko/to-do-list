@@ -1,5 +1,5 @@
-import checkboxesEvent, { list } from './status-update.js';
-import { displayTasks } from './crudtask.js';
+import checkboxesEvent, {list} from './status-update.js';
+import { displayTasks } from './crudtodo.js';
 
 export default function dragAndDrop() {
   let dragged;
@@ -24,6 +24,6 @@ export default function dragAndDrop() {
       event.target.id = list[event.target.id].index;
     }
     displayTasks();
-    checkboxesEvent(list);
+    checkboxesEvent();
   }, false);
 }

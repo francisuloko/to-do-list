@@ -1,13 +1,12 @@
 import './style.css';
-import checkboxesEvent, { list } from './status-update.js';
+import checkboxesEvent, {list, save} from './status-update.js';
 import dragAndDrop from './drag-and-drop.js';
 import {
   displayTasks, remove, edit, clear,
-} from './crudtask.js';
+} from './crudtodo.js';
 
 displayTasks();
+checkboxesEvent();
 dragAndDrop();
-checkboxesEvent(list);
 edit();
-remove();
 clear();

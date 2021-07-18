@@ -1,60 +1,7 @@
-/* eslint-disable no-alert */
-// eslint-disable-next-line import/no-named-default
-import checkboxesEvent, { list, save } from './status-update.js';
-
+import checkboxesEvent, {list, save, fixIndex, setList} from './status-update.js';
 
 const todoList = document.getElementById('todo-list');
-
-
-export function edit() {
-  const edit = document.querySelectorAll('span');
-  for (let i = 0; i < edit.length; i += 1) {
-    edit[i].addEventListener('click', () => {
-      if (true) {
-        const { id } = edit[i].parentNode;
-        if (edit[i].textContent) {
-          edit[i].addEventListener('mouseleave', (event) => {
-            localStorage.setItem('edit', JSON.stringify(edit[i].textContent));
-            list[i].description = JSON.parse(localStorage.getItem('edit'));
-            save();
-            displayTasks();
-          });
-        }
-      }
-    });
-  }
-}
-
-export function clear() {
-  document.getElementById('clear-complete').addEventListener('click', (event) => {
-    const filtered = list.filter((element) => {
-      if (element.completed === false) {
-        return true;
-      }
-      return false;
-    });
-    list = filtered;
-    for (let i = 0; i < list.length; i += 1) {
-      list[i].index = i;
-    }
-    checkboxesEvent();
-    save();
-  });
-}
-
-export function remove() {
-  const remove = document.querySelectorAll('.bi-trash');
-  for (let i = 0; i < remove.length; i += 1) {
-    remove[i].addEventListener('click', (event) => {
-      if (true) {
-        const { id } = remove[i].parentNode;
-        list.splice(id, 1);
-        save();
-        displayTasks();
-      }
-    });
-  }
-}
+const items = document.getElementsByClassName('task-item')
 
 const createTask = (task) => {
   let todoObj = '';
@@ -77,6 +24,7 @@ const createTask = (task) => {
   }
 
   todoList.innerHTML += todoObj;
+  checkboxesEvent();
 };
 
 export const displayTasks = () => {
@@ -95,9 +43,53 @@ export const displayTasks = () => {
   sortedList.forEach((task) => {
     createTask(task);
   });
-  remove();
+  checkboxesEvent();
   save();
 };
+
+export function edit() {
+  for (let i = 0; i < items.length; i += 1) {
+    items[i].children[1].addEventListener('click', (event) => {
+      console.log(items[i].children[1]);
+      if(event.target) {
+        items[i].children[1].addEventListener('mouseleave', () => {
+          localStorage.setItem('edit', JSON.stringify(editable[i].textContent));
+          list[i].description = JSON.parse(localStorage.getItem('edit'));
+          save();
+        });
+      }
+    });
+  }
+  displayTasks();
+  checkboxesEvent();
+  remove();
+}
+
+export function clear() {
+  document.getElementById('clear-complete').addEventListener('click', (event) => {
+    const callback = (task) => task.completed === false;
+    const todo = list.filter(callback);
+    setList(todo)
+    fixIndex(list);
+    checkboxesEvent();
+    save();
+  });
+}
+
+export function remove() {
+  for (let i = 0; i < items.length; i += 1) {
+    items[i].children[3].addEventListener('click', (event) => {
+      if (event) {
+        list.splice(i, 1);
+        fixIndex(list);
+        save();
+      }
+      checkboxesEvent();
+      displayTasks();
+      remove();
+    });
+  }
+}
 
 document.getElementById('task-entry').addEventListener('keypress', (event) => {
   if (event.key === 'Enter') {
