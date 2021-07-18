@@ -1,7 +1,10 @@
-import checkboxesEvent, { list, save, fixIndex, setList} from './status-update.js';
+// eslint-disable-next-line import/no-cycle
+import checkboxesEvent, {
+  list, save, fixIndex, setList, remove,
+} from './status-update.js';
 
 const todoList = document.getElementById('todo-list');
-const items = document.getElementsByClassName('task-item')
+export const items = document.getElementsByClassName('task-item');
 
 const createTask = (task) => {
   let todoObj = '';
@@ -48,19 +51,19 @@ export const displayTasks = () => {
 };
 
 export function edit() {
-  const editables = document.querySelectorAll("[contenteditable]");
-  for(let i=0; i < editables.length; i+=1) {
-    editables[i].addEventListener("click", () => {
-      editables[i].parentNode.children[3].classList.add('show')
-      editables[i].parentNode.children[2].classList.add('hide')
-      editables[i].addEventListener("blur", (event) => {
-        if(event.target){
-          localStorage.setItem("edit", JSON.stringify(editables[i].innerHTML));
-          list[i].description = JSON.parse(localStorage.getItem('edit'))
+  const editables = document.querySelectorAll('[contenteditable]');
+  for (let i = 0; i < editables.length; i += 1) {
+    editables[i].addEventListener('click', () => {
+      editables[i].parentNode.children[3].classList.add('show');
+      editables[i].parentNode.children[2].classList.add('hide');
+      editables[i].addEventListener('blur', (event) => {
+        if (event.target) {
+          localStorage.setItem('edit', JSON.stringify(editables[i].innerHTML));
+          list[i].description = JSON.parse(localStorage.getItem('edit'));
           save();
         }
         // editables[i].parentNode.children[3].classList.remove('show')
-        editables[i].parentNode.children[2].classList.remove('hide')
+        editables[i].parentNode.children[2].classList.remove('hide');
         edit();
         remove();
       });
@@ -69,33 +72,17 @@ export function edit() {
 }
 
 export function clear() {
-  document.getElementById('clear-complete').addEventListener('click', (event) => {
+  document.getElementById('clear-complete').addEventListener('click', () => {
     const callback = (task) => task.completed === false;
     const todo = list.filter(callback);
-    setList(todo)
+    setList(todo);
     fixIndex(list);
     checkboxesEvent();
     save();
   });
 }
 
-export function remove() {
-  for (let i = 0; i < items.length; i += 1) {
-    items[i].children[3].addEventListener('click', (event) => {
-      if (event.target) {
-        list.splice(i, 1);
-        fixIndex(list);
-        save();
-      }
-      checkboxesEvent();
-      displayTasks();
-      remove();
-    });
-  }
-}
-
-
-export function add(){
+export function add() {
   document.getElementById('task-entry').addEventListener('keypress', (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();

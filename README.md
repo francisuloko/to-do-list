@@ -1,22 +1,20 @@
-# to-do-list
+> # To-Do List
 
-![](https://img.shields.io/badge/Microverse-blueviolet)
+> Built with webpack and ES6
 
-# To-Do List 
-
-> To build a to-do list with webpack and ES6
+> ![](./src/assets/todo-list.png) 
 
 Project Summary:
 
-- Set up a new project with webpack
-- Create an index.html file
-- Created an index.js file and set an array of some simple to do tasks (array of objects).
-- Wrote a function to iterate over the tasks array and populate an HTML list item element for each task.
-- Dynamically rendered created list of tasks in the dedicated placeholder.
-- Created a style.css and set rules for the To-Do List.
-- Added dragged and drop functionality to To-Do list
-- Added task completion functionality
-- Persisted sorted list to localStorage
+In the following project, I have implemeted functionalities for:
+
+- Adding a new item.
+- Removing a selected item.
+- Reordering a selected item (as drag-and-drop).
+- Marking a selected item as complete.
+- Removing all items marked as complete at once.
+
+The project involves working with functions that respond to user actions. These actions are anticipated and listened to using JavaScript Event Listeners.
 
 ## Built With
 
@@ -30,7 +28,7 @@ Project Summary:
 
 To get a local copy up and running follow these simple steps:
 
-Open terminal or command line and run the following commands:
+   - `Open terminal Ctrl + Alt + T`
 
    - `git clone git@github.com:francisuloko/to-do-list.git`
 
@@ -49,13 +47,14 @@ Open terminal or command line and run the following commands:
 - `vscode`
 - `git`
 
+
 ## Author
 
 👤 **Francis Uloko**
 
-- GitHub: [@francisuloko](https://github.com/francisuloko)
-- Twitter: [@francisuloko](https://twitter.com/francisuloko)
-- LinkedIn: [@francisuloko](https://linkedin.com/in/francisuloko)
+- [GitHub](https://github.com/francisuloko)
+- [Twitter](https://twitter.com/francisuloko)
+- [LinkedIn](https://linkedin.com/in/francisuloko)
 
 
 ## 🤝 Contributing

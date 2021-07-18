@@ -1,5 +1,6 @@
-import { displayTasks } from "./crudtodo";
-
+// eslint-disable-next-line import/no-cycle
+import { displayTasks, items } from './crudtodo.js';
+// eslint-disable-next-line import/no-mutable-exports
 export let list = [];
 
 if (localStorage.getItem('list')) {
@@ -16,28 +17,46 @@ export function fixIndex(list) {
   }
 }
 
-export function setList(filter){
-  list = []
-  for(let i=0; i < filter.length; i +=1){
-    list[i] = filter[i]
+export function setList(filter) {
+  list = [];
+  for (let i = 0; i < filter.length; i += 1) {
+    list[i] = filter[i];
     save();
-    displayTasks()
+    displayTasks();
   }
 }
 
-
 export default function checkboxesEvent() {
+  const temp = list;
+
   const checkboxes = document.getElementsByClassName('checkbox');
   for (let i = 0; i < checkboxes.length; i += 1) {
     checkboxes[i].addEventListener('change', () => {
-      if (list[i].completed === true) {
-        list[i].completed = false;
-        document.getElementById(`desc-${list[i].index}`).classList.remove('completed');
+      if (temp[i].completed === true) {
+        temp[i].completed = false;
+        document.getElementById(`desc-${temp[i].index}`).classList.remove('completed');
       } else {
-        list[i].completed = true;
-        document.getElementById(`desc-${list[i].index}`).classList.add('completed');
+        temp[i].completed = true;
+        document.getElementById(`desc-${temp[i].index}`).classList.add('completed');
       }
-      save();
+      setList(temp);
+    });
+  }
+}
+
+export function remove() {
+  const temp = list;
+  for (let i = 0; i < items.length; i += 1) {
+    items[i].children[3].addEventListener('click', (event) => {
+      if (event.target) {
+        temp.splice(i, 1);
+        fixIndex(temp);
+        setList(temp);
+        save();
+      }
+      checkboxesEvent();
+      displayTasks();
+      remove();
     });
   }
 }
