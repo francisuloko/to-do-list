@@ -1,4 +1,4 @@
-import checkboxesEvent, {list, save, fixIndex, setList} from './status-update.js';
+import checkboxesEvent, { list, save, fixIndex, setList} from './status-update.js';
 
 const todoList = document.getElementById('todo-list');
 const items = document.getElementsByClassName('task-item')
@@ -9,7 +9,7 @@ const createTask = (task) => {
     todoObj = `
       <article id="${task.index}" class="task-item" draggable="true">
         <input type='checkbox' name='completed' class="checkbox" checked>
-        <span class='task-description completed' id="desc-${task.index}" contenteditable="true">${task.description}</span>
+        <span class='task-description completed' id="desc-${task.index}" contenteditable>${task.description}</span>
         <i class="bi bi-three-dots-vertical"></i>
         <i class="bi bi-trash"></i>
       </article>`;
@@ -17,7 +17,7 @@ const createTask = (task) => {
     todoObj = `
         <article  id="${task.index}" class="task-item" draggable="true">
           <input type='checkbox' name='completed' class="checkbox">
-          <span class='task-description' id="desc-${task.index}" contenteditable="true">${task.description}</span>
+          <span class='task-description' id="desc-${task.index}" contenteditable>${task.description}</span>
           <i class="bi bi-three-dots-vertical"></i>
           <i class="bi bi-trash"></i>
         </article>`;
@@ -47,22 +47,20 @@ export const displayTasks = () => {
   save();
 };
 
+
+
 export function edit() {
-  for (let i = 0; i < items.length; i += 1) {
-    items[i].children[1].addEventListener('click', (event) => {
-      console.log(items[i].children[1]);
-      if(event.target) {
-        items[i].children[1].addEventListener('mouseleave', () => {
-          localStorage.setItem('edit', JSON.stringify(editable[i].textContent));
-          list[i].description = JSON.parse(localStorage.getItem('edit'));
-          save();
-        });
+  const editables = document.querySelectorAll("[contenteditable]");
+  for(let i=0; i < editables.length; i+=1) {
+    editables[i].addEventListener("blur", (event) => {
+      if(event.target){
+        localStorage.setItem("edit", JSON.stringify(editables[i].innerHTML));
+        list[i].description = JSON.parse(localStorage.getItem('edit'))
+        save();
       }
-    });
+      edit();
+    })
   }
-  displayTasks();
-  checkboxesEvent();
-  remove();
 }
 
 export function clear() {
