@@ -1,4 +1,5 @@
 // eslint-disable-next-line import/no-cycle
+import dragAndDrop from './drag-and-drop.js';
 import checkboxesEvent, {
   list, save, fixIndex, setList, remove,
 } from './status-update.js';
@@ -14,7 +15,7 @@ const createTask = (task) => {
         <input type='checkbox' name='completed' class="checkbox" checked>
         <span class='task-description completed' id="desc-${task.index}" contenteditable>${task.description}</span>
         <i class="bi bi-three-dots-vertical"></i>
-        <i class="bi bi-trash"></i>
+        <i class="bi bi-trash hide"></i>
       </article>`;
   } else {
     todoObj = `
@@ -22,7 +23,7 @@ const createTask = (task) => {
           <input type='checkbox' name='completed' class="checkbox">
           <span class='task-description' id="desc-${task.index}" contenteditable>${task.description}</span>
           <i class="bi bi-three-dots-vertical"></i>
-          <i class="bi bi-trash"></i>
+          <i class="bi bi-trash hide"></i>
         </article>`;
   }
 
@@ -47,26 +48,20 @@ export const displayTasks = () => {
     createTask(task);
   });
   checkboxesEvent();
+  remove();
   save();
 };
 
 export function edit() {
   const editables = document.querySelectorAll('[contenteditable]');
   for (let i = 0; i < editables.length; i += 1) {
-    editables[i].addEventListener('click', () => {
-      editables[i].parentNode.children[3].classList.add('show');
-      editables[i].parentNode.children[2].classList.add('hide');
-      editables[i].addEventListener('blur', (event) => {
-        if (event.target) {
-          localStorage.setItem('edit', JSON.stringify(editables[i].innerHTML));
-          list[i].description = JSON.parse(localStorage.getItem('edit'));
-          save();
-        }
-        editables[i].parentNode.children[2].classList.remove('hide');
+      editables[i].addEventListener('blur', () => {
+        localStorage.setItem('edit', JSON.stringify(editables[i].innerHTML));
+        list[i].description = JSON.parse(localStorage.getItem('edit'));
+        save();
+        displayTasks();
         edit();
-        remove();
       });
-    });
   }
 }
 
@@ -76,23 +71,22 @@ export function clear() {
     const todo = list.filter(callback);
     setList(todo);
     fixIndex(list);
-    checkboxesEvent();
     save();
+    checkboxesEvent();
   });
 }
 
 export function add() {
   document.getElementById('task-entry').addEventListener('keypress', (event) => {
     if (event.key === 'Enter') {
-      event.preventDefault();
       const description = document.getElementById('task-entry');
       const id = list.length;
       const task = { description: description.value, completed: false, index: id };
       description.value = '';
       list.push(task);
       save();
-      remove();
       displayTasks();
+      edit();
       checkboxesEvent();
     }
   });
